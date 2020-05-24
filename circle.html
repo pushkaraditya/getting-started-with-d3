@@ -1,0 +1,102 @@
+<html>
+<head>
+    <title>Experimenting with d3</title>
+    <style>
+        svg {
+            width: 1000px;
+            height: 1000px;
+            /* border: 3px solid green;
+            background-image: linear-gradient(to right, black, white); */
+            transform-origin: 0 0;
+        }
+    </style>
+    <script src="./d3.js"></script>
+</head>
+<body>
+    <script>
+        var values =  [0, 2, 8, 1, 2];
+        var initialX = 15;
+        var deltaX = 25;
+        var initialY = 15;
+        var deltaY = 25;
+
+        var currentX = initialX;
+        var currentY = initialY;
+
+        var svg = d3.select("body")
+            .append("svg")
+            .attr("transform", "scale(8)")
+            ;
+
+        var gCircle = svg.append("g");
+        gCircle.attr("class", "circleGroup");
+
+        values.forEach(v => drawCircle(gCircle, v));
+
+        var grect = svg.append("g");
+        grect.attr("class", "rectangleGroup");
+
+        currentX = initialX;
+        currentY += deltaY;
+
+        values.forEach(v => drawRectangle(grect, v));
+
+        currentX = initialX;
+        currentY += deltaY;
+
+        var gCircleProp = svg.append("g");
+        gCircleProp.attr("class", "circleGroup");
+
+        values.forEach(v => drawProportionalCircle(gCircleProp, v));
+
+        function drawRectangle(grect, height) {
+            grect.append("rect")
+                .attr("fill", "red")
+                .attr("height", height)
+                .attr("width", 5)
+                .attr("x", currentX)
+                .attr("y", currentY);
+
+            grect.append("text")
+                .text(height)
+                .attr("x", currentX)
+                .attr("y", currentY)
+                .attr("font-size", '3pt');
+
+            currentX += deltaX;
+        }
+
+        function drawCircle(gCircle, radius) {
+            gCircle.append("circle")
+                .attr("fill", "red")
+                .attr("r", radius)
+                .attr("cx", currentX)
+                .attr("cy", currentY);
+
+            gCircle.append("text")
+                .text(radius)
+                .attr("x", currentX)
+                .attr("y", currentY)
+                .attr("font-size", '3pt');
+
+            currentX += deltaX;
+        }
+
+        function drawProportionalCircle(gCircleProp, radius) {
+            gCircleProp.append("circle")
+                .attr("fill", "red")
+                .attr("r", Math.sqrt(radius))
+                .attr("cx", currentX)
+                .attr("cy", currentY);
+
+            gCircleProp.append("text")
+                .text(radius)
+                .attr("x", currentX)
+                .attr("y", currentY)
+                .attr("font-size", '3pt');
+
+            currentX += 25;
+        }
+    </script>
+</body>
+</html>
